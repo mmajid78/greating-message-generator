@@ -45,6 +45,10 @@ import {
   Utensils,
   Wine,
   Type,
+  User,
+  Facebook,
+  Twitter,
+  Instagram,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -83,6 +87,7 @@ interface CardData {
   id: string;
   message: string;
   name: string;
+  senderName: string;
   age: string;
   hobby: string;
   occasion: string;
@@ -97,6 +102,7 @@ interface CardData {
 
 interface FormData {
   name: string;
+  senderName: string;
   age: string;
   hobby: string;
   occasion: string;
@@ -520,6 +526,101 @@ const formatRelativeTime = (date: Date): string => {
   return date.toLocaleDateString();
 };
 
+// Social Media Share Icons Component
+const SocialShareButtons = ({
+  card,
+  isDark,
+}: {
+  card: CardData;
+  isDark: boolean;
+}) => {
+  const shareText = `${card.message}\n\n— ${card.senderName}`;
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+  const socialPlatforms = [
+    {
+      name: 'WhatsApp',
+      icon: () => (
+        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      ),
+      color: 'bg-green-500 hover:bg-green-600',
+      getUrl: () => `https://wa.me/?text=${encodeURIComponent(shareText)}`,
+    },
+    {
+      name: 'Facebook',
+      icon: Facebook,
+      color: 'bg-blue-600 hover:bg-blue-700',
+      getUrl: () => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
+    },
+    {
+      name: 'X',
+      icon: Twitter,
+      color: 'bg-slate-800 hover:bg-slate-900',
+      getUrl: () => `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
+    },
+    {
+      name: 'Instagram',
+      icon: Instagram,
+      color: 'bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600',
+      getUrl: () => `https://www.instagram.com/`,
+    },
+    {
+      name: 'TikTok',
+      icon: () => (
+        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+        </svg>
+      ),
+      color: 'bg-black hover:bg-gray-800',
+      getUrl: () => `https://www.tiktok.com/`,
+    },
+    {
+      name: 'Snapchat',
+      icon: () => (
+        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+          <path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12 1.033-.301.165-.088.344-.104.464-.104.182 0 .359.029.509.09.45.149.734.479.734.838.015.449-.39.839-1.213 1.168-.089.029-.209.075-.344.119-.45.135-1.139.36-1.333.81-.09.224-.061.524.12.868l.015.015c.06.136 1.526 3.475 4.791 4.014.255.044.435.27.42.509 0 .075-.015.149-.045.225-.24.569-1.273.988-3.146 1.271-.059.091-.12.375-.164.57-.029.179-.074.36-.134.553-.076.271-.27.405-.555.405h-.03c-.135 0-.313-.031-.538-.074-.36-.075-.765-.135-1.273-.135-.3 0-.599.015-.913.074-.6.104-1.123.464-1.723.884-.853.599-1.826 1.288-3.294 1.288-.06 0-.119-.015-.18-.015h-.149c-1.468 0-2.427-.675-3.279-1.288-.599-.42-1.107-.779-1.707-.884-.314-.045-.629-.074-.928-.074-.54 0-.958.089-1.272.149-.211.043-.391.074-.54.074-.374 0-.523-.224-.583-.42-.061-.192-.09-.389-.135-.567-.046-.181-.105-.494-.166-.57-1.918-.222-2.95-.642-3.189-1.226-.031-.063-.052-.15-.055-.225-.015-.243.165-.465.42-.509 3.264-.54 4.73-3.879 4.791-4.02l.016-.029c.18-.345.224-.645.119-.869-.195-.434-.884-.658-1.332-.809-.121-.029-.24-.074-.346-.119-1.107-.435-1.257-.93-1.197-1.273.09-.479.674-.793 1.168-.793.146 0 .27.029.383.074.42.194.789.3 1.104.3.234 0 .384-.06.465-.105l-.046-.569c-.098-1.626-.225-3.651.307-4.837C7.392 1.077 10.739.807 11.727.807l.419-.015h.06z"/>
+        </svg>
+      ),
+      color: 'bg-yellow-400 hover:bg-yellow-500',
+      getUrl: () => `https://www.snapchat.com/`,
+    },
+  ];
+
+  return (
+    <div className="flex items-center gap-1 flex-wrap">
+      {socialPlatforms.map((platform) => {
+        const IconComponent = platform.icon;
+        return (
+          <TooltipProvider key={platform.name}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => window.open(platform.getUrl(), '_blank', 'noopener,noreferrer')}
+                  className={cn(
+                    'h-7 w-7 p-0 text-white',
+                    platform.color
+                  )}
+                >
+                  {typeof IconComponent === 'function' && 'prototype' in IconComponent ? (
+                    <IconComponent className="w-4 h-4" />
+                  ) : (
+                    <IconComponent />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Share on {platform.name}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+      })}
+    </div>
+  );
+};
+
 // Generated Card Component
 const GeneratedCard = ({
   card,
@@ -631,7 +732,22 @@ const GeneratedCard = ({
               </div>
             </div>
           ) : (
-            <p className={cn('text-sm leading-relaxed whitespace-pre-wrap', font.style)}>{card.message}</p>
+            <>
+              <p className={cn('text-sm leading-relaxed whitespace-pre-wrap', font.style)}>{card.message}</p>
+              {/* Sender Name */}
+              {card.senderName && (
+                <div className={cn(
+                  'mt-4 pt-3 border-t border-white/20 text-right',
+                  font.style
+                )}>
+                  <p className={cn(
+                    'text-sm italic opacity-80',
+                  )}>
+                    — {card.senderName} 💝
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
 
@@ -651,7 +767,7 @@ const GeneratedCard = ({
 
       {/* Action Buttons */}
       <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2 flex-wrap">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -696,7 +812,7 @@ const GeneratedCard = ({
                   <Share2 className="w-4 h-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Share</TooltipContent>
+              <TooltipContent>Native Share</TooltipContent>
             </Tooltip>
           </TooltipProvider>
 
@@ -768,6 +884,12 @@ const GeneratedCard = ({
             </Tooltip>
           </TooltipProvider>
         </div>
+
+        {/* Social Media Share Buttons */}
+        <div className="flex items-center justify-center mt-3 pt-3 border-t border-white/10">
+          <span className={cn('text-xs mr-2', isDark ? 'text-white/60' : 'text-slate-600')}>Share:</span>
+          <SocialShareButtons card={card} isDark={isDark} />
+        </div>
       </div>
     </motion.div>
   );
@@ -781,6 +903,7 @@ export default function BirthdayCardGenerator() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     name: '',
+    senderName: '',
     age: '',
     hobby: '',
     occasion: 'Birthday',
@@ -919,6 +1042,7 @@ export default function BirthdayCardGenerator() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: data.name,
+          senderName: data.senderName,
           age: data.age,
           hobby: data.hobby,
           occasion: data.occasion,
@@ -939,6 +1063,7 @@ export default function BirthdayCardGenerator() {
         id: `card-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         message: responseData.message,
         name: data.name,
+        senderName: data.senderName,
         age: data.age,
         hobby: data.hobby,
         occasion: data.occasion,
@@ -961,7 +1086,16 @@ export default function BirthdayCardGenerator() {
     if (!formData.name.trim()) {
       toast({
         title: 'Name required',
-        description: 'Please enter a name for the card.',
+        description: 'Please enter a recipient name for the card.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (!formData.senderName.trim()) {
+      toast({
+        title: 'Your name required',
+        description: 'Please enter your name (sender) for the card.',
         variant: 'destructive',
       });
       return;
@@ -1010,6 +1144,7 @@ export default function BirthdayCardGenerator() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: card.name,
+          senderName: card.senderName,
           age: card.age,
           hobby: card.hobby,
           occasion: card.occasion,
@@ -1049,16 +1184,18 @@ export default function BirthdayCardGenerator() {
 
   // Card actions
   const copyCard = useCallback((card: CardData) => {
-    navigator.clipboard.writeText(card.message);
+    const textToCopy = `${card.message}\n\n— ${card.senderName}`;
+    navigator.clipboard.writeText(textToCopy);
     toast({ title: 'Copied! 📋', description: 'Card message copied to clipboard.' });
   }, [toast]);
 
   const shareCard = useCallback(async (card: CardData) => {
+    const shareText = `${card.message}\n\n— ${card.senderName}`;
     if (navigator.share) {
       try {
         await navigator.share({
           title: `Card for ${card.name}`,
-          text: card.message,
+          text: shareText,
         });
       } catch {
         // User cancelled share
@@ -1109,7 +1246,8 @@ export default function BirthdayCardGenerator() {
     const exportData = {
       message: card.message,
       metadata: {
-        name: card.name,
+        recipientName: card.name,
+        senderName: card.senderName,
         occasion: card.occasion,
         tone: card.tone,
         theme: card.theme,
@@ -1350,9 +1488,24 @@ export default function BirthdayCardGenerator() {
                     </Label>
                     <Input
                       id="name"
-                      placeholder="Enter name..."
+                      placeholder="Enter recipient's name..."
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="h-12 input-glow dark:bg-slate-800 dark:border-slate-600 dark:text-white transition-shadow"
+                      aria-required
+                    />
+                  </div>
+
+                  {/* Sender Name */}
+                  <div className="space-y-2">
+                    <Label htmlFor="senderName" className="text-base font-medium dark:text-slate-200">
+                      Your Name (Sender) <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="senderName"
+                      placeholder="Enter your name..."
+                      value={formData.senderName}
+                      onChange={(e) => setFormData({ ...formData, senderName: e.target.value })}
                       className="h-12 input-glow dark:bg-slate-800 dark:border-slate-600 dark:text-white transition-shadow"
                       aria-required
                     />
@@ -1558,7 +1711,7 @@ export default function BirthdayCardGenerator() {
                     size="lg"
                     className="w-full btn-primary h-14 text-lg"
                     onClick={generateCards}
-                    disabled={isGenerating || !formData.name.trim()}
+                    disabled={isGenerating || !formData.name.trim() || !formData.senderName.trim()}
                   >
                     {isGenerating ? (
                       <>
@@ -1650,6 +1803,14 @@ export default function BirthdayCardGenerator() {
                         🎯 Including references to: {formData.hobby}
                       </p>
                     )}
+                    {formData.senderName && (
+                      <p className={cn(
+                        'text-sm italic opacity-80 pt-3 border-t border-white/20',
+                        FONTS.find(f => f.value === formData.font)?.style
+                      )}>
+                        — {formData.senderName} 💝
+                      </p>
+                    )}
                     <Badge
                       variant="secondary"
                       className={cn(
@@ -1665,7 +1826,7 @@ export default function BirthdayCardGenerator() {
                 ) : (
                   <div className="space-y-4 text-slate-400 dark:text-slate-500">
                     <Wand2 className="w-16 h-16 mx-auto opacity-30" />
-                    <p>Enter a name to see the preview</p>
+                    <p>Enter names to see the preview</p>
                   </div>
                 )}
               </div>

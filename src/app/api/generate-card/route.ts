@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, age, hobby, occasion, tone, creativity, theme, language } = body;
+    const { name, senderName, age, hobby, occasion, tone, creativity, theme, language } = body;
 
     // Validate required fields
     if (!name || !occasion || !tone) {
@@ -155,6 +155,7 @@ export async function POST(request: NextRequest) {
     const prompt = `Create a personalized greeting card message ${languageInstruction}.
 
 Context: ${occasionContext}${hobby ? `. ${name} loves ${hobby}` : ''}
+The card is from: ${senderName || 'A friend'}
 
 Requirements:
 - Tone: ${toneInstruction}
@@ -165,7 +166,7 @@ Please write a complete greeting card message that:
 1. Has a catchy headline/title
 2. Contains 2-4 sentences for the main message
 3. Includes appropriate emojis to enhance the message
-4. Ends with a warm closing
+4. Ends with a warm closing (but do NOT include a signature - that will be added separately)
 
 Make it personal, memorable, and perfectly suited for ${name}.`;
 
@@ -217,6 +218,7 @@ Your messages are always original, creative, and make people feel special.`
       message,
       metadata: {
         name,
+        senderName,
         age,
         hobby,
         occasion,
