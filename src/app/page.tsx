@@ -54,6 +54,10 @@ import {
   EyeOff,
   Type as TypeIcon,
   Settings,
+  FileText,
+  Cookie,
+  AlertTriangle,
+  Scale,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -620,6 +624,356 @@ const AccessibilityPanel = ({
   );
 };
 
+// Legal Page Content
+const LEGAL_CONTENT = {
+  privacy: {
+    title: 'Privacy Policy',
+    icon: Shield,
+    lastUpdated: 'January 1, 2025',
+    content: `
+## 1. Information We Collect
+
+At Greeting Message Generator, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our service.
+
+### Personal Information
+- **Name and Sender Name**: Used solely for personalizing your greeting cards
+- **Usage Data**: Anonymous analytics to improve our service
+- **Preferences**: Theme, language, and font preferences stored locally on your device
+
+### Information We Do NOT Collect
+- We do not store your generated cards on our servers
+- We do not sell or share your personal information with third parties
+- We do not track you across other websites
+
+## 2. How We Use Your Information
+
+Your information is used exclusively to:
+- Generate personalized greeting cards using AI
+- Save your preferences locally for a better user experience
+- Improve our service through anonymous usage analytics
+
+## 3. Data Storage
+
+All card data and preferences are stored locally in your browser's localStorage. This means:
+- Your data never leaves your device unless you explicitly share it
+- Clearing your browser data will remove your saved cards
+- You have full control over your data at all times
+
+## 4. Third-Party Services
+
+We use the following third-party services:
+- **Groq AI**: For generating greeting card messages. Your prompts are sent to Groq's servers for processing.
+- **Vercel**: For hosting our application
+
+## 5. Cookies
+
+We use essential cookies and localStorage to:
+- Remember your preferences (dark mode, font size, accessibility settings)
+- Store your generated cards locally
+- Improve your browsing experience
+
+## 6. Your Rights
+
+You have the right to:
+- Access your data (available in your browser's localStorage)
+- Delete your data (clear your browser data or use our "Clear All" feature)
+- Opt-out of any analytics (if applicable)
+
+## 7. Children's Privacy
+
+Our service is not intended for children under 13. We do not knowingly collect personal information from children.
+
+## 8. Changes to This Policy
+
+We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+
+## 9. Contact Us
+
+If you have questions about this Privacy Policy, please contact us through our GitHub repository.
+    `,
+  },
+  terms: {
+    title: 'Terms of Use',
+    icon: FileText,
+    lastUpdated: 'January 1, 2025',
+    content: `
+## 1. Acceptance of Terms
+
+By accessing and using Greeting Message Generator ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by these terms, please do not use this service.
+
+## 2. Description of Service
+
+The Service provides AI-powered greeting card message generation. Users can:
+- Generate personalized greeting card messages
+- Customize cards with various themes, tones, and styles
+- Save, edit, copy, and share generated cards
+- Export card data for personal use
+
+## 3. User Responsibilities
+
+You agree to:
+- Use the Service only for lawful purposes
+- Not generate content that is harmful, illegal, or infringes on others' rights
+- Not attempt to overload or abuse our systems
+- Not use the Service for spam or harassment
+
+## 4. Intellectual Property
+
+- **Generated Content**: You own the greeting cards you generate and are free to use them as you wish
+- **Service Content**: The Service's design, code, and original content remain our property
+- **AI-Generated Content**: AI-generated content may not be copyrightable in some jurisdictions
+
+## 5. Disclaimer of Warranties
+
+THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
+- Implied warranties of merchantability
+- Fitness for a particular purpose
+- Non-infringement
+
+## 6. Limitation of Liability
+
+We shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from:
+- Your use or inability to use the Service
+- Any content obtained from the Service
+- Unauthorized access to your data
+
+## 7. Indemnification
+
+You agree to indemnify and hold harmless the Service from any claims, damages, or expenses arising from your use of the Service or violation of these Terms.
+
+## 8. Modifications to Service
+
+We reserve the right to:
+- Modify or discontinue the Service at any time
+- Update these Terms of Use
+- Change pricing (if applicable) with notice
+
+## 9. Termination
+
+We may terminate or suspend your access to the Service immediately, without prior notice, for any reason, including breach of these Terms.
+
+## 10. Governing Law
+
+These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles.
+
+## 11. Contact
+
+For questions about these Terms, please contact us through our GitHub repository.
+    `,
+  },
+  disclaimer: {
+    title: 'Disclaimer',
+    icon: AlertTriangle,
+    lastUpdated: 'January 1, 2025',
+    content: `
+## General Disclaimer
+
+The Greeting Message Generator is provided for entertainment and personal use purposes only. The information and content generated by this service are provided "as is" without any representations or warranties, express or implied.
+
+## AI-Generated Content
+
+### Content Accuracy
+All greeting card messages are generated by artificial intelligence (Groq AI). While we strive for quality:
+- Content may not always be accurate or appropriate
+- AI may occasionally generate unexpected or unintended content
+- Messages should be reviewed before sharing
+
+### No Professional Advice
+The Service does not provide professional advice. Greeting card messages are not intended to:
+- Replace professional communication
+- Serve as legal, medical, or financial advice
+- Address serious personal or professional situations
+
+## Limitation of Responsibility
+
+We are not responsible for:
+- How you use or share generated content
+- Any offense caused by AI-generated messages
+- The accuracy or appropriateness of generated content
+- Any damages resulting from use of the Service
+
+## User Responsibility
+
+Users are responsible for:
+- Reviewing content before sharing
+- Ensuring content is appropriate for recipients
+- Verifying any factual information in generated content
+- Using the Service in compliance with applicable laws
+
+## Third-Party Links
+
+The Service may contain links to third-party websites or services. We are not responsible for:
+- The content of linked sites
+- Privacy practices of third parties
+- Any damages from using third-party services
+
+## No Guarantee
+
+We do not guarantee:
+- Uninterrupted access to the Service
+- Error-free operation
+- That the Service will meet your specific requirements
+- The availability of any particular features
+
+## Changes to Service
+
+We may modify, suspend, or discontinue any aspect of the Service at any time without notice.
+
+## Contact
+
+For questions about this Disclaimer, please contact us through our GitHub repository.
+    `,
+  },
+  cookies: {
+    title: 'Cookies Policy',
+    icon: Cookie,
+    lastUpdated: 'January 1, 2025',
+    content: `
+## What Are Cookies?
+
+Cookies are small text files stored on your device when you visit a website. They help improve your experience by remembering preferences and settings.
+
+## How We Use Cookies and Local Storage
+
+### Essential Storage
+
+We use localStorage (similar to cookies) for essential functions:
+
+| Storage Item | Purpose | Duration |
+|-------------|---------|----------|
+| birthdayCards | Stores your generated greeting cards | Until cleared |
+| userPreferences | Remembers your form preferences | Persistent |
+| darkMode | Remembers your theme preference | Persistent |
+| accessibilitySettings | Stores accessibility preferences | Persistent |
+
+### No Tracking Cookies
+
+We do NOT use:
+- Third-party tracking cookies
+- Advertising cookies
+- Analytics cookies that track you across sites
+- Social media tracking cookies
+
+## Local Storage vs Cookies
+
+Our service primarily uses **localStorage** instead of traditional cookies:
+- Data stays on your device
+- We cannot access this data from our servers
+- You have full control over your data
+- Data persists until you clear it
+
+## Managing Your Data
+
+### Clear Browser Data
+You can clear your stored data by:
+1. Clearing browser cache and cookies
+2. Using our "Clear All Cards" feature
+3. Opening browser developer tools > Application > Local Storage
+
+### Browser Settings
+Most browsers allow you to:
+- Block all cookies/storage
+- Delete cookies on browser close
+- Browse in incognito/private mode
+
+## Third-Party Services
+
+We use third-party services that may use cookies:
+- **Vercel**: Our hosting provider (for site functionality)
+- **Groq AI**: AI message generation (no persistent cookies)
+
+## Your Choices
+
+You can:
+- Continue using the Service with localStorage enabled
+- Browse in incognito mode for temporary sessions
+- Clear your data at any time
+
+## Changes to This Policy
+
+We may update this Cookies Policy. Continued use of the Service constitutes acceptance of any changes.
+
+## Contact
+
+For questions about our Cookies Policy, please contact us through our GitHub repository.
+    `,
+  },
+};
+
+// Legal Page Dialog Component
+const LegalPageDialog = ({
+  type,
+  open,
+  onOpenChange,
+}: {
+  type: 'privacy' | 'terms' | 'disclaimer' | 'cookies';
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) => {
+  const content = LEGAL_CONTENT[type];
+  const IconComponent = content.icon;
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto dark:bg-slate-800 dark:border-slate-700">
+        <DialogHeader>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+              <IconComponent className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <DialogTitle className="text-xl dark:text-white">{content.title}</DialogTitle>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                Last updated: {content.lastUpdated}
+              </p>
+            </div>
+          </div>
+        </DialogHeader>
+        <div className="mt-4 prose prose-slate dark:prose-invert max-w-none">
+          <div className="text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed">
+            {content.content.split('\n').map((line, index) => {
+              if (line.startsWith('## ')) {
+                return (
+                  <h2 key={index} className="text-lg font-bold text-slate-800 dark:text-white mt-6 mb-3">
+                    {line.replace('## ', '')}
+                  </h2>
+                );
+              }
+              if (line.startsWith('### ')) {
+                return (
+                  <h3 key={index} className="text-base font-semibold text-slate-700 dark:text-slate-200 mt-4 mb-2">
+                    {line.replace('### ', '')}
+                  </h3>
+                );
+              }
+              if (line.startsWith('- ')) {
+                return (
+                  <li key={index} className="ml-4 text-sm">
+                    {line.replace('- ', '')}
+                  </li>
+                );
+              }
+              if (line.trim() === '') {
+                return <br key={index} />;
+              }
+              return (
+                <p key={index} className="text-sm mb-2">
+                  {line}
+                </p>
+              );
+            })}
+          </div>
+        </div>
+        <DialogFooter className="mt-6">
+          <Button onClick={() => onOpenChange(false)} className="btn-primary">
+            I Understand
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 // Theme Preview Component
 const ThemePreview = ({
   theme,
@@ -1137,6 +1491,7 @@ export default function BirthdayCardGenerator() {
     dyslexiaFont: false,
   });
   const [showAccessibilityPanel, setShowAccessibilityPanel] = useState(false);
+  const [legalPage, setLegalPage] = useState<'privacy' | 'terms' | 'disclaimer' | 'cookies' | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Dark mode toggle
@@ -2295,21 +2650,81 @@ export default function BirthdayCardGenerator() {
 
       {/* Footer */}
       <footer className="py-12 bg-slate-50 dark:bg-slate-800 border-t dark:border-slate-700">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-              <Gift className="w-4 h-4 text-white" />
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                <Gift className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-bold text-lg dark:text-white">CardGen AI</span>
             </div>
-            <span className="font-bold text-lg dark:text-white">CardGen AI</span>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
+              Create beautiful, personalized greeting cards with the power of AI.
+            </p>
           </div>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
-            Create beautiful, personalized greeting cards with the power of AI.
-          </p>
-          <p className="text-slate-400 dark:text-slate-500 text-xs">
+
+          {/* Legal Links */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
+            <button
+              onClick={() => setLegalPage('privacy')}
+              className="text-sm text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-purple-400 transition-colors flex items-center gap-1.5"
+            >
+              <Shield className="w-4 h-4" />
+              Privacy Policy
+            </button>
+            <span className="text-slate-300 dark:text-slate-600">•</span>
+            <button
+              onClick={() => setLegalPage('terms')}
+              className="text-sm text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-purple-400 transition-colors flex items-center gap-1.5"
+            >
+              <FileText className="w-4 h-4" />
+              Terms of Use
+            </button>
+            <span className="text-slate-300 dark:text-slate-600">•</span>
+            <button
+              onClick={() => setLegalPage('disclaimer')}
+              className="text-sm text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-purple-400 transition-colors flex items-center gap-1.5"
+            >
+              <AlertTriangle className="w-4 h-4" />
+              Disclaimer
+            </button>
+            <span className="text-slate-300 dark:text-slate-600">•</span>
+            <button
+              onClick={() => setLegalPage('cookies')}
+              className="text-sm text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-purple-400 transition-colors flex items-center gap-1.5"
+            >
+              <Cookie className="w-4 h-4" />
+              Cookies Policy
+            </button>
+          </div>
+
+          <p className="text-slate-400 dark:text-slate-500 text-xs text-center">
             © {new Date().getFullYear()} CardGen AI. Powered by Groq AI. All rights reserved.
           </p>
         </div>
       </footer>
+
+      {/* Legal Page Dialogs */}
+      <LegalPageDialog
+        type="privacy"
+        open={legalPage === 'privacy'}
+        onOpenChange={(open) => setLegalPage(open ? 'privacy' : null)}
+      />
+      <LegalPageDialog
+        type="terms"
+        open={legalPage === 'terms'}
+        onOpenChange={(open) => setLegalPage(open ? 'terms' : null)}
+      />
+      <LegalPageDialog
+        type="disclaimer"
+        open={legalPage === 'disclaimer'}
+        onOpenChange={(open) => setLegalPage(open ? 'disclaimer' : null)}
+      />
+      <LegalPageDialog
+        type="cookies"
+        open={legalPage === 'cookies'}
+        onOpenChange={(open) => setLegalPage(open ? 'cookies' : null)}
+      />
 
       {/* Clear Confirmation Dialog */}
       <Dialog open={showClearConfirm} onOpenChange={setShowClearConfirm}>
