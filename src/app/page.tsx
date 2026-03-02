@@ -971,8 +971,8 @@ const GeneratedCard = ({
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+      {/* Action Buttons - Always visible on mobile, hover on desktop */}
+      <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/30 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
         <div className="flex items-center justify-center gap-2 flex-wrap">
           <TooltipProvider>
             <Tooltip>
