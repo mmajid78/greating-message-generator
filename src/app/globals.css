@@ -502,3 +502,228 @@
     border: 1px solid #e5e7eb;
   }
 }
+
+/* ============================================
+   ACCESSIBILITY STYLES
+   ============================================ */
+
+/* Skip to Main Content Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #6366f1;
+  color: white;
+  padding: 8px 16px;
+  z-index: 100;
+  transition: top 0.3s;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* Focus Visible Styles */
+.focus-visible-ring:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Font Size Classes for Accessibility */
+.font-size-small {
+  font-size: 0.875rem !important;
+}
+
+.font-size-normal {
+  font-size: 1rem !important;
+}
+
+.font-size-large {
+  font-size: 1.125rem !important;
+}
+
+.font-size-extra-large {
+  font-size: 1.25rem !important;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --primary: #ffff00;
+  --primary-foreground: #000000;
+  --secondary: #ffffff;
+  --secondary-foreground: #000000;
+  --border: #ffffff;
+  --input: #ffffff;
+  --ring: #ffff00;
+}
+
+.high-contrast .gradient-bg {
+  background: #000000 !important;
+}
+
+.high-contrast .glass {
+  background: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
+
+.high-contrast .btn-primary {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
+
+.high-contrast .birthday-card {
+  background: #000000 !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+.high-contrast input,
+.high-contrast select,
+.high-contrast textarea {
+  background: #000000 !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .gradient-bg {
+    animation: none !important;
+  }
+  
+  .gradient-text {
+    animation: none !important;
+  }
+  
+  .float,
+  .float-delayed,
+  .float-slow {
+    animation: none !important;
+  }
+  
+  .pulse-glow {
+    animation: none !important;
+  }
+  
+  .spinner {
+    animation: none !important;
+  }
+}
+
+/* User-specified Reduced Motion */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+.reduced-motion .gradient-bg {
+  animation: none !important;
+}
+
+.reduced-motion .gradient-text {
+  animation: none !important;
+}
+
+.reduced-motion .float,
+.reduced-motion .float-delayed,
+.reduced-motion .float-slow {
+  animation: none !important;
+}
+
+/* Dyslexia-Friendly Font */
+.dyslexia-friendly {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+  line-height: 1.5;
+}
+
+/* Enhanced Focus Indicators */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.high-contrast a:focus-visible,
+.high-contrast button:focus-visible,
+.high-contrast input:focus-visible,
+.high-contrast select:focus-visible,
+.high-contrast textarea:focus-visible {
+  outline: 3px solid #ffff00;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Visible on Focus for screen reader elements */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Better Link Underline for Accessibility */
+a:not([class]) {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Target Size for Touch */
+@media (pointer: coarse) {
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* High Contrast Focus Rings */
+.high-contrast *:focus {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px !important;
+}

@@ -49,6 +49,11 @@ import {
   Facebook,
   Twitter,
   Instagram,
+  Accessibility,
+  Eye,
+  EyeOff,
+  Type as TypeIcon,
+  Settings,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -119,6 +124,13 @@ interface UserPreferences {
   theme: string;
   font: string;
   creativity: number;
+}
+
+interface AccessibilitySettings {
+  fontSize: 'small' | 'normal' | 'large' | 'extra-large';
+  highContrast: boolean;
+  reducedMotion: boolean;
+  dyslexiaFont: boolean;
 }
 
 // Constants - Extended Occasions
@@ -418,6 +430,195 @@ const ScrollToTop = ({ show }: { show: boolean }) => (
     )}
   </AnimatePresence>
 );
+
+// Accessibility Settings Panel
+const AccessibilityPanel = ({
+  settings,
+  onSettingsChange,
+  isOpen,
+  onToggle,
+}: {
+  settings: AccessibilitySettings;
+  onSettingsChange: (settings: AccessibilitySettings) => void;
+  isOpen: boolean;
+  onToggle: () => void;
+}) => {
+  const fontSizes = [
+    { value: 'small', label: 'Small', icon: 'A' },
+    { value: 'normal', label: 'Normal', icon: 'A' },
+    { value: 'large', label: 'Large', icon: 'A' },
+    { value: 'extra-large', label: 'X-Large', icon: 'A' },
+  ];
+
+  return (
+    <div className="fixed bottom-6 left-6 z-40">
+      {/* Toggle Button */}
+      <Button
+        onClick={onToggle}
+        className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-lg hover:scale-110 transition-transform"
+        aria-label={isOpen ? 'Close accessibility settings' : 'Open accessibility settings'}
+        aria-expanded={isOpen}
+        aria-controls="accessibility-panel"
+      >
+        <Accessibility className="w-6 h-6" />
+      </Button>
+
+      {/* Settings Panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            id="accessibility-panel"
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            className="absolute bottom-16 left-0 w-72 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 p-4"
+            role="dialog"
+            aria-label="Accessibility settings"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                <Accessibility className="w-5 h-5" />
+                Accessibility
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onToggle}
+                className="h-6 w-6 p-0"
+                aria-label="Close accessibility settings"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+
+            {/* Font Size */}
+            <div className="space-y-2 mb-4">
+              <Label className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <TypeIcon className="w-4 h-4" />
+                Text Size
+              </Label>
+              <div className="grid grid-cols-4 gap-1">
+                {fontSizes.map((size) => (
+                  <button
+                    key={size.value}
+                    onClick={() => onSettingsChange({ ...settings, fontSize: size.value as AccessibilitySettings['fontSize'] })}
+                    className={cn(
+                      'py-2 rounded-lg text-sm font-medium transition-all',
+                      'focus:outline-none focus:ring-2 focus:ring-purple-500',
+                      settings.fontSize === size.value
+                        ? 'bg-purple-500 text-white'
+                        : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+                    )}
+                    style={{ fontSize: size.value === 'small' ? '0.75rem' : size.value === 'large' ? '1rem' : size.value === 'extra-large' ? '1.125rem' : '0.875rem' }}
+                    aria-pressed={settings.fontSize === size.value}
+                    aria-label={`Set text size to ${size.label}`}
+                  >
+                    {size.icon}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* High Contrast */}
+            <div className="flex items-center justify-between py-2 border-t border-slate-200 dark:border-slate-700">
+              <Label htmlFor="high-contrast" className="text-sm text-slate-700 dark:text-slate-300 flex items-center gap-2 cursor-pointer">
+                <Eye className="w-4 h-4" />
+                High Contrast
+              </Label>
+              <button
+                id="high-contrast"
+                role="switch"
+                aria-checked={settings.highContrast}
+                onClick={() => onSettingsChange({ ...settings, highContrast: !settings.highContrast })}
+                className={cn(
+                  'relative w-11 h-6 rounded-full transition-colors',
+                  'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2',
+                  settings.highContrast ? 'bg-purple-500' : 'bg-slate-300 dark:bg-slate-600'
+                )}
+              >
+                <span
+                  className={cn(
+                    'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform shadow',
+                    settings.highContrast && 'translate-x-5'
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Reduced Motion */}
+            <div className="flex items-center justify-between py-2 border-t border-slate-200 dark:border-slate-700">
+              <Label htmlFor="reduced-motion" className="text-sm text-slate-700 dark:text-slate-300 flex items-center gap-2 cursor-pointer">
+                <Zap className="w-4 h-4" />
+                Reduce Motion
+              </Label>
+              <button
+                id="reduced-motion"
+                role="switch"
+                aria-checked={settings.reducedMotion}
+                onClick={() => onSettingsChange({ ...settings, reducedMotion: !settings.reducedMotion })}
+                className={cn(
+                  'relative w-11 h-6 rounded-full transition-colors',
+                  'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2',
+                  settings.reducedMotion ? 'bg-purple-500' : 'bg-slate-300 dark:bg-slate-600'
+                )}
+              >
+                <span
+                  className={cn(
+                    'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform shadow',
+                    settings.reducedMotion && 'translate-x-5'
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Dyslexia-Friendly Font */}
+            <div className="flex items-center justify-between py-2 border-t border-slate-200 dark:border-slate-700">
+              <Label htmlFor="dyslexia-font" className="text-sm text-slate-700 dark:text-slate-300 flex items-center gap-2 cursor-pointer">
+                <TypeIcon className="w-4 h-4" />
+                Dyslexia Font
+              </Label>
+              <button
+                id="dyslexia-font"
+                role="switch"
+                aria-checked={settings.dyslexiaFont}
+                onClick={() => onSettingsChange({ ...settings, dyslexiaFont: !settings.dyslexiaFont })}
+                className={cn(
+                  'relative w-11 h-6 rounded-full transition-colors',
+                  'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2',
+                  settings.dyslexiaFont ? 'bg-purple-500' : 'bg-slate-300 dark:bg-slate-600'
+                )}
+              >
+                <span
+                  className={cn(
+                    'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform shadow',
+                    settings.dyslexiaFont && 'translate-x-5'
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Reset Button */}
+            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => onSettingsChange({
+                  fontSize: 'normal',
+                  highContrast: false,
+                  reducedMotion: false,
+                  dyslexiaFont: false,
+                })}
+              >
+                Reset to Defaults
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 // Theme Preview Component
 const ThemePreview = ({
@@ -929,6 +1130,13 @@ export default function BirthdayCardGenerator() {
   const [editMessage, setEditMessage] = useState('');
   const [userPreferences, setUserPreferences] = useState<UserPreferences | null>(null);
   const [showPreferencesDialog, setShowPreferencesDialog] = useState(false);
+  const [accessibilitySettings, setAccessibilitySettings] = useState<AccessibilitySettings>({
+    fontSize: 'normal',
+    highContrast: false,
+    reducedMotion: false,
+    dyslexiaFont: false,
+  });
+  const [showAccessibilityPanel, setShowAccessibilityPanel] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Dark mode toggle
@@ -971,6 +1179,22 @@ export default function BirthdayCardGenerator() {
         // Ignore parse errors
       }
     }
+
+    // Load accessibility settings
+    const savedA11y = localStorage.getItem('accessibilitySettings');
+    if (savedA11y) {
+      try {
+        const a11y = JSON.parse(savedA11y) as AccessibilitySettings;
+        setAccessibilitySettings(a11y);
+      } catch {
+        // Ignore parse errors
+      }
+    }
+
+    // Check system preferences for reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setAccessibilitySettings(prev => ({ ...prev, reducedMotion: true }));
+    }
   }, []);
 
   // Save user preferences when form data changes
@@ -987,6 +1211,32 @@ export default function BirthdayCardGenerator() {
       setUserPreferences(prefs);
     }
   }, [formData.language, formData.tone, formData.theme, formData.font, formData.creativity, isMounted]);
+
+  // Save and apply accessibility settings
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem('accessibilitySettings', JSON.stringify(accessibilitySettings));
+    }
+
+    // Apply font size class
+    const html = document.documentElement;
+    html.classList.remove('font-size-small', 'font-size-normal', 'font-size-large', 'font-size-extra-large');
+    html.classList.add(`font-size-${accessibilitySettings.fontSize}`);
+
+    // Apply high contrast
+    html.classList.toggle('high-contrast', accessibilitySettings.highContrast);
+
+    // Apply reduced motion
+    html.classList.toggle('reduced-motion', accessibilitySettings.reducedMotion);
+
+    // Apply dyslexia-friendly font
+    html.classList.toggle('dyslexia-friendly', accessibilitySettings.dyslexiaFont);
+  }, [accessibilitySettings, isMounted]);
+
+  // Handler for accessibility settings change
+  const handleAccessibilityChange = useCallback((newSettings: AccessibilitySettings) => {
+    setAccessibilitySettings(newSettings);
+  }, []);
 
   // Scroll handler
   useEffect(() => {
@@ -1330,9 +1580,20 @@ export default function BirthdayCardGenerator() {
 
   return (
     <div className={cn('min-h-screen gradient-bg dark:from-slate-900 dark:via-slate-800 dark:to-slate-900')}>
+      {/* Skip to Main Content Link */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      
       <StickyNav isDark={isDark} toggleDark={toggleDark} scrolled={scrolled} />
       <Confetti active={showConfetti} />
       <ScrollToTop show={showScrollTop} />
+      <AccessibilityPanel
+        settings={accessibilitySettings}
+        onSettingsChange={handleAccessibilityChange}
+        isOpen={showAccessibilityPanel}
+        onToggle={() => setShowAccessibilityPanel(!showAccessibilityPanel)}
+      />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-20">
@@ -1443,7 +1704,7 @@ export default function BirthdayCardGenerator() {
       </section>
 
       {/* Generator Section */}
-      <section id="generator" className="py-16 md:py-24 bg-white dark:bg-slate-900">
+      <section id="generator" className="py-16 md:py-24 bg-white dark:bg-slate-900" role="main">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Form Card */}
